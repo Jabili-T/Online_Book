@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Catalog - BookStore</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .catalog-container {
+            padding: 6rem 5% 2rem;
+        }
+
+        .filters {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .book-info {
+            padding: 1rem;
+        }
+
+        .book-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #232f3e;
+        }
+
+        .book-info .author {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .book-info .price {
+            color: #232f3e;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 0.8rem;
+            background: #febd69;
+            border: none;
+            border-radius: 4px;
+            color: #232f3e;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #f3a847;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+
+        .pagination button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .pagination button.active {
+            background: #232f3e;
+            color: white;
+            border-color: #232f3e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>📚 BookStore</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for books..." id="searchInput">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+                     <div class="nav-links">
+                         <a href="../index.html">Home</a>
+                         <a href="catalog.html" class="active">Books</a>
+                         <a href="free-books.html">Free Books</a>
+                         <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+                         <a href="login.html" id="loginBtn">Login</a>
+                         <a href="profile.html" id="profileBtn" style="display: none;">Profile</a>
+                     </div>
+                  </nav>
+              </header> 
+    <main class="catalog-container">
+        <!-- Add Free Books Banner -->
+        <div class="free-books-banner" style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h2 style="margin: 0; color: #232f3e;">Looking for Free Books?</h2>
+                <p style="margin: 0.5rem 0 0 0;">Explore our collection of free books and resources</p>
+            </div>
+            <a href="free-books.html" class="cta-button" style="background: #febd69; padding: 0.8rem 1.5rem; border-radius: 4px; text-decoration: none; color: #232f3e; font-weight: bold;">Browse Free Books</a>
+        </div>
+
+        <div class="filters">
+
+            <div class="filter-group">
+                <label for="category">Category</label>
+                <select id="category">
+                    <option value="">All Categories</option>
+                    <option value="fiction">Fiction</option>
+                    <option value="non-fiction">Non-Fiction</option>
+                    <option value="science">Science</option>
+                    <option value="technology">Technology</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="price">Price Range</label>
+                <select id="price">
+                    <option value="">All Prices</option>
+                    <option value="0-10">Under $10</option>
+                    <option value="10-20">$10 - $20</option>
+                    <option value="20-30">$20 - $30</option>
+                    <option value="30+">Over $30</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="book-grid" id="bookGrid">
+            <!-- Books will be dynamically loaded here -->
+        </div>
+
+        <div class="pagination">
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>Next</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Your one-stop destination for all kinds of books.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="catalog.html">Books Catalog</a></li>
+                    <li><a href="cart.html">Shopping Cart</a></li>
+                    <li><a href="login.html">Login/Register</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@bookstore.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 BookStore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        //  catalog-specific JavaScript
+        const categorySelect = document.getElementById('category');
+        const priceSelect = document.getElementById('price');
+        const searchInput = document.getElementById('searchInput');
+
+        function filterBooks() {
+            const category = categorySelect.value;
+            const priceRange = priceSelect.value;
+            const searchTerm = searchInput.value.toLowerCase();
+
+            const bookCards = document.querySelectorAll('.book-card');
+            bookCards.forEach(card => {
+                const bookCategory = card.dataset.category;
+                const bookPrice = parseFloat(card.dataset.price);
+                const bookTitle = card.querySelector('h3').textContent.toLowerCase();
+                const bookAuthor = card.querySelector('.author').textContent.toLowerCase();
+
+                let showCard = true;
+
+                if (category && bookCategory !== category) {
+                    showCard = false;
+                }
+
+                if (priceRange) {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    if (max && (bookPrice < min || bookPrice > max)) {
+                        showCard = false;
+                    } else if (!max && bookPrice < min) {
+                        showCard = false;
+                    }
+                }
+
+                if (searchTerm && !bookTitle.includes(searchTerm) && !bookAuthor.includes(searchTerm)) {
+                    showCard = false;
+                }
+
+                card.style.display = showCard ? 'block' : 'none';
+            });
+        }
+
+        categorySelect.addEventListener('change', filterBooks);
+        priceSelect.addEventListener('change', filterBooks);
+        searchInput.addEventListener('input', filterBooks);
+        
+                // Initial books array
+                const books = [
+                    {
+                        id: 1,
+                        title: "The Great Gatsby",
+                        author: "F. Scott Fitzgerald",
+                        price: 14.99,
+                        image: "../images/great-gatsby.jpeg",
+                        category: "fiction"
+                    },
+                    {
+                        id: 2,
+                        title: "To Kill a Mockingbird",
+                        author: "Harper Lee",
+                        price: 12.99,
+                        image: "../images/mockingbird.jpeg",
+                        category: "fiction"
+                    },
+                    {
+                        id: 3,
+                        title: "Think and Grow Rich",
+                        author: "Napoleon Hill",
+                        price: 19.99,
+                        image: "../images/think-grow-rich.jpeg",
+                        category: "non-fiction"
+                    },
+                    {
+                        id: 4,
+                        title: "Python Programming",
+                        author: "John Smith",
+                        price: 29.99,
+                        image: "../images/python-programming.jpeg",
+                        category: "technology"
+                    }
+                ];
+
+        // Load more books for the catalog
+        const additionalBooks = [
+            {
+                id: 5,
+                title: "The Psychology of Money",
+                author: "Morgan Housel",
+                price: 18.99,
+                image: "../images/psychology-money.jpeg",
+                category: "non-fiction"
+            },
+            {
+                id: 6,
+                title: "Clean Code",
+                author: "Robert C. Martin",
+                price: 34.99,
+                image: "../images/clean-code.jpeg",
+                category: "technology"
+            }
+        ];
+
+    // Combine with existing books and display all
+        const allBooks = [...books, ...additionalBooks];
+        
+        // Filter out duplicate books by ID
+        const uniqueBooks = Array.from(new Map(allBooks.map(book => [book.id, book])).values());
+        
+        const bookGrid = document.getElementById('bookGrid');
+                // Initialize cart array in localStorage if it doesn't exist
+                if (!localStorage.getItem('cart')) {
+                    localStorage.setItem('cart', JSON.stringify([]));
+                }
+        
+                function addToCart(bookId, title, author, price, image) {
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    
+                    // Check if book is already in cart
+                    const existingItem = cart.find(item => item.id === bookId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: bookId,
+                            title: title,
+                            author: author,
+                            price: price,
+                            image: image,
+                            quantity: 1
+                        });
+                    }
+                    
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    alert('Book added to cart!');
+                }
+
+                // Display unique books
+                uniqueBooks.forEach(book => {
+                    const bookCard = document.createElement('div');
+                    bookCard.className = 'book-card';
+                    bookCard.dataset.category = book.category;
+                    bookCard.dataset.price = book.price;
+                    
+                 bookCard.innerHTML = `
+                        <img src="${book.image}" alt="${book.title}" onerror="this.src='../images/placeholder-book.jpg'">
+                        <div class="book-info">
+                            <h3>${book.title}</h3>
+                            <p class="author">by ${book.author}</p>
+                            <p class="price">$${book.price.toFixed(2)}</p>
+                            <button onclick="addToCart(${book.id}, '${book.title}', '${book.author}', ${book.price}, '${book.image}')" class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                        </div>
+                    `    
+                    
+                    bookGrid.appendChild(bookCard);
+                });
+                
+                function addToCart(bookId, title, author, price, image) {
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const existingItem = cart.find(item => item.id === bookId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: bookId,
+                            title: title,
+                            author: author,
+                            price: price,
+                            image: image,
+                            quantity: 1
+                        });
+                    }
+                    
+                    localStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Create modal message
+                    const modal = document.createElement('div');
+                    modal.innerHTML = `
+                        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+                            <div style="background: white; padding: 20px; border-radius: 8px; text-align: center; max-width: 400px;">
+                                <h3 style="margin-top: 0; color: #232f3e;">Book Added to Cart!</h3>
+                                <p style="margin: 10px 0;">${title} has been added to your cart.</p>
+                                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                                    <button onclick="this.closest('div').parentElement.parentElement.remove()" style="padding: 8px 16px; background: #f0f0f0; border: none; border-radius: 4px; cursor: pointer;">Continue Shopping</button>
+                                    <button onclick="window.location.href='cart.html'" style="padding: 8px 16px; background: #febd69; border: none; border-radius: 4px; cursor: pointer;">View Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+
+                    // Close modal when clicking outside
+                    modal.querySelector('div').addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            modal.remove();
+                        }
+                    });
+                }
+            </script>
+        </body>
+        </html>    

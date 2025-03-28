@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookStore - Your Online Book Paradise</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loading.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading-container" id="loadingContainer">
+        <div class="book">
+            <div class="book__page"></div>
+            <div class="book__page"></div>
+            <div class="book__page"></div>
+        </div>
+        <div class="loading-text">Opening Your Book Paradise...</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" style="display: none;">
+        <!-- Header -->
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>📚 BookStore</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for books...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="active">Home</a>
+                    <a href="pages/catalog.html">Books</a>
+                    <a href="pages/free-books.html">Free Books</a>
+                    <a href="pages/cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+                    <div id="userSection" class="user-section">
+                        <span id="welcomeMessage" style="display: none; margin-right: 15px;"></span>
+                        <button id="loginBtn" onclick="showLoginModal()" style="padding: 8px 16px; background: #232f3e; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">Login</button>
+                        <button id="registerBtn" onclick="showRegisterModal()" style="padding: 8px 16px; background: #febd69; color: #232f3e; border: none; border-radius: 4px; cursor: pointer;">Register</button>
+                        <button id="logoutBtn" onclick="logout()" style="display: none; padding: 8px 16px; background: #232f3e; color: white; border: none; border-radius: 4px; cursor: pointer;">Logout</button>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to Your Book Paradise</h1>
+                <p>Discover millions of eBooks, audiobooks, and more</p>
+                <a href="pages/catalog.html" class="cta-button">Explore Books</a>
+            </div>
+        </section>
+
+        <!-- Featured Books -->
+        <section class="featured-section">
+            <h2>Featured Books</h2>
+            <div class="book-grid featured-books">
+                <!-- Books will be dynamically loaded here -->
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="categories">
+            <h2>Popular Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <i class="fas fa-magic"></i>
+                    <h3>Fantasy</h3>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Romance</h3>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-microscope"></i>
+                    <h3>Science</h3>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-book-reader"></i>
+                    <h3>Fiction</h3>
+                </div>
+                <div class="category-card">
+                    <a href="pages/free-books.html" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Free Books</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>Your one-stop destination for all kinds of books.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="pages/catalog.html">Books Catalog</a></li>
+                        <li><a href="pages/cart.html">Shopping Cart</a></li>
+                        <li><a href="pages/login.html">Login/Register</a></li>
+                        <li><a href="pages/free-books.html">Free Books</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>Email: support@bookstore.com</p>
+                    <p>Phone: (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BookStore. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: relative; background: white; width: 90%; max-width: 400px; margin: 50px auto; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <button onclick="closeLoginModal()" style="position: absolute; right: 10px; top: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+            <h2 style="margin-top: 0; color: #232f3e;">Login</h2>
+            <form id="loginForm" onsubmit="login(event)">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Email</label>
+                    <input type="email" id="loginEmail" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Password</label>
+                    <input type="password" id="loginPassword" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <button type="submit" style="width: 100%; padding: 10px; background: #232f3e; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Login</button>
+                <p style="text-align: center; margin-top: 15px;">
+                    Don't have an account? <a href="#" onclick="showRegisterModal(); closeLoginModal();" style="color: #febd69;">Register here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: relative; background: white; width: 90%; max-width: 400px; margin: 50px auto; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <button onclick="closeRegisterModal()" style="position: absolute; right: 10px; top: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+            <h2 style="margin-top: 0; color: #232f3e;">Register</h2>
+            <form id="registerForm" onsubmit="register(event)">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Name</label>
+                    <input type="text" id="registerName" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Email</label>
+                    <input type="email" id="registerEmail" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Password</label>
+                    <input type="password" id="registerPassword" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <button type="submit" style="width: 100%; padding: 10px; background: #febd69; color: #232f3e; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Register</button>
+                <p style="text-align: center; margin-top: 15px;">
+                    Already have an account? <a href="#" onclick="showLoginModal(); closeRegisterModal();" style="color: #febd69;">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000;">
+        <div style="position: relative; background: white; width: 90%; max-width: 400px; margin: 50px auto; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <div id="successContent" style="text-align: center; padding: 20px;">
+                <!-- Success content will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Books - BookStore</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header (same as index.html) -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>📚 BookStore</h1>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="catalog.html">Books</a>
+                <a href="free-books.html" class="active">Free Books</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+                <a href="login.html" id="loginBtn">Login</a>
+                <a href="profile.html" id="profileBtn" style="display: none;">Profile</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Free Books Content -->
+    <main class="free-books-content">
+        <h1>Free Online Books</h1>
+        
+        <section class="free-resources">
+            <div class="resource-card">
+                <i class="fas fa-book-open"></i>
+                <h2>Project Gutenberg</h2>
+                <p>Over 60,000 free eBooks to download</p>
+                <a href="https://www.gutenberg.org/" target="_blank" class="resource-link">Visit Site</a>
+            </div>
+
+            <div class="resource-card">
+                <i class="fas fa-archive"></i>
+                <h2>Internet Archive</h2>
+                <p>Millions of free books, movies, & audio</p>
+                <a href="https://archive.org/details/texts" target="_blank" class="resource-link">Visit Site</a>
+            </div>
+
+            <div class="resource-card">
+                <i class="fas fa-university"></i>
+                <h2>Open Library</h2>
+                <p>Free library card for digital borrowing</p>
+                <a href="https://openlibrary.org/" target="_blank" class="resource-link">Visit Site</a>
+            </div>
+
+            <div class="resource-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>OpenStax</h2>
+                <p>Free peer-reviewed textbooks</p>
+                <a href="https://openstax.org/" target="_blank" class="resource-link">Visit Site</a>
+            </div>
+        </section>
+
+        <section class="featured-free-books">
+            <h2>Featured Free Books</h2>
+            <div class="book-grid">
+                <!-- Sample free books -->
+                <div class="book-card">
+                    <img src="https://www.gutenberg.org/cache/epub/1513/pg1513.cover.medium.jpg" alt="Romeo and Juliet">
+                    <h3>Romeo and Juliet</h3>
+                    <p>William Shakespeare</p>
+                    <a href="https://www.gutenberg.org/ebooks/1513" target="_blank" class="read-button">Read Now</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Your one-stop destination for all kinds of books.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="catalog.html">Books Catalog</a></li>
+                    <li><a href="cart.html">Shopping Cart</a></li>
+                    <li><a href="free-books.html">Free Books</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@bookstore.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 BookStore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
